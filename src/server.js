@@ -1,9 +1,18 @@
+require('dotenv').config();
+
 const express = require("express");
+const mongoose = require("mongoose");
+const { connectDB } = require("./utils/database");
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 app.get("/", (request, response) => {
     response.send("Hello from Docker!");
 })
 
-app.listen(3000, () => console.log("server is running on port 3000"));
+app.listen(PORT,
+    async () => {
+        await connectDB();
+        console.log("server is running on port: ", PORT)
+    }); 
